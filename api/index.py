@@ -10,8 +10,7 @@ load_dotenv()
 
 OPENROUTER_API_KEY = os.getenv("GEMINI_API_KEY")
 OPENROUTER_URL     = "https://openrouter.ai/api/v1/chat/completions"
-MODEL              = "google/gemini-2.0-flash-lite-001"
-
+MODEL = "google/gemini-2.0-flash-001"
 app = FastAPI(title="Makeup AI API", version="1.0.0")
 
 app.add_middleware(
@@ -217,10 +216,11 @@ async def test_gemini():
             OPENROUTER_URL,
             headers={
                 "Authorization": f"Bearer {OPENROUTER_API_KEY}",
-                "Content-Type":  "application/json",
-                "HTTP-Referer":  "http://localhost:8000",
-                "X-Title":       "MakeupAI"
+                "Content-Type": "application/json",
+                "HTTP-Referer": "http://localhost:8000",
+                "X-OpenRouter-Title": "MakeupAI"
             },
+            
             json=test_payload
         )
         return {
@@ -250,10 +250,10 @@ async def call_gemini(prompt: str, image_b64: str | None) -> str:
                 OPENROUTER_URL,
                 headers={
                     "Authorization": f"Bearer {OPENROUTER_API_KEY}",
-                    "Content-Type":  "application/json",
-                    "HTTP-Referer":  "http://localhost:8000",
-                    "X-Title":       "MakeupAI"
-                },
+                    "Content-Type": "application/json",
+                    "HTTP-Referer": "http://localhost:8000",
+                    "X-OpenRouter-Title": "MakeupAI"
+               },
                 json=payload
             )
             if response.status_code == 429:

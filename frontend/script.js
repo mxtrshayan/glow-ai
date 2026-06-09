@@ -1,6 +1,5 @@
 // ── Config ────────────────────────────────────────────────
-const API_URL = 'http://localhost:8000/analyze';
-
+const API_URL = '/analyze';
 // ── Image Upload & Drag-Drop ──────────────────────────────
 const uploadZone = document.getElementById('uploadZone');
 const imageInput = document.getElementById('imageInput');
@@ -9,39 +8,40 @@ const uploadPreview = document.getElementById('uploadPreview');
 const previewImg = document.getElementById('previewImg');
 const removeImgBtn = document.getElementById('removeImg');
 
-uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('drag-over'); });
+uploadZone.addEventListener('dragover', e => { e.preventDefault();
+    uploadZone.classList.add('drag-over'); });
 uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('drag-over'));
 uploadZone.addEventListener('drop', e => {
-  e.preventDefault();
-  uploadZone.classList.remove('drag-over');
-  const file = e.dataTransfer.files[0];
-  if (file && file.type.startsWith('image/')) showPreview(file);
+    e.preventDefault();
+    uploadZone.classList.remove('drag-over');
+    const file = e.dataTransfer.files[0];
+    if (file && file.type.startsWith('image/')) showPreview(file);
 });
 
 uploadZone.addEventListener('click', e => {
-  if (e.target.closest('.btn-remove') || e.target.closest('.upload-preview')) return;
-  if (uploadPreview.style.display === 'none') imageInput.click();
+    if (e.target.closest('.btn-remove') || e.target.closest('.upload-preview')) return;
+    if (uploadPreview.style.display === 'none') imageInput.click();
 });
 
 imageInput.addEventListener('change', () => {
-  if (imageInput.files[0]) showPreview(imageInput.files[0]);
+    if (imageInput.files[0]) showPreview(imageInput.files[0]);
 });
 
 function showPreview(file) {
-  const reader = new FileReader();
-  reader.onload = e => {
-    previewImg.src = e.target.result;
-    uploadContent.style.display = 'none';
-    uploadPreview.style.display = 'block';
-  };
-  reader.readAsDataURL(file);
+    const reader = new FileReader();
+    reader.onload = e => {
+        previewImg.src = e.target.result;
+        uploadContent.style.display = 'none';
+        uploadPreview.style.display = 'block';
+    };
+    reader.readAsDataURL(file);
 }
 
 removeImgBtn.addEventListener('click', () => {
-  imageInput.value = '';
-  previewImg.src = '';
-  uploadPreview.style.display = 'none';
-  uploadContent.style.display = 'block';
+    imageInput.value = '';
+    previewImg.src = '';
+    uploadPreview.style.display = 'none';
+    uploadContent.style.display = 'block';
 });
 
 // ── Color Picker ──────────────────────────────────────────
@@ -49,14 +49,14 @@ const colorInput = document.getElementById('outfit_color');
 const colorLabel = document.getElementById('colorLabel');
 
 colorInput.addEventListener('input', () => {
-  colorLabel.textContent = colorInput.value.toUpperCase();
+    colorLabel.textContent = colorInput.value.toUpperCase();
 });
 
 document.querySelectorAll('.preset').forEach(p => {
-  p.addEventListener('click', () => {
-    colorInput.value = p.dataset.color;
-    colorLabel.textContent = p.dataset.color.toUpperCase();
-  });
+    p.addEventListener('click', () => {
+        colorInput.value = p.dataset.color;
+        colorLabel.textContent = p.dataset.color.toUpperCase();
+    });
 });
 
 // ── Form Submit ───────────────────────────────────────────
@@ -67,83 +67,83 @@ const retryBtn = document.getElementById('retryBtn');
 const resultsSubtitle = document.getElementById('resultsSubtitle');
 
 form.addEventListener('submit', async e => {
-  e.preventDefault();
+    e.preventDefault();
 
-  const event = document.getElementById('event').value;
-  const timeOfDay = document.getElementById('time_of_day').value;
-  if (!event || !timeOfDay) {
-    alert('Please select an Event Type and Time of Day.');
-    return;
-  }
+    const event = document.getElementById('event').value;
+    const timeOfDay = document.getElementById('time_of_day').value;
+    if (!event || !timeOfDay) {
+        alert('Please select an Event Type and Time of Day.');
+        return;
+    }
 
-  const formData = new FormData();
-  if (imageInput.files[0]) formData.append('image', imageInput.files[0]);
+    const formData = new FormData();
+    if (imageInput.files[0]) formData.append('image', imageInput.files[0]);
 
-  const skinTone = document.querySelector('input[name="skin_tone"]:checked');
-  formData.append('skin_tone', skinTone ? skinTone.value : '');
-  formData.append('event', event);
-  formData.append('time_of_day', timeOfDay);
-  formData.append('outfit_color', colorInput.value);
+    const skinTone = document.querySelector('input[name="skin_tone"]:checked');
+    formData.append('skin_tone', skinTone ? skinTone.value : '');
+    formData.append('event', event);
+    formData.append('time_of_day', timeOfDay);
+    formData.append('outfit_color', colorInput.value);
 
-  // Show loading
-  form.style.display = 'none';
-  loadingOverlay.style.display = 'block';
-  resultsContainer.style.display = 'none';
+    // Show loading
+    form.style.display = 'none';
+    loadingOverlay.style.display = 'block';
+    resultsContainer.style.display = 'none';
 
-  try {
-    const response = await fetch(API_URL, { method: 'POST', body: formData });
-    if (!response.ok) throw new Error(`Server error: ${response.status}`);
+    try {
+        const response = await fetch(API_URL, { method: 'POST', body: formData });
+        if (!response.ok) throw new Error(`Server error: ${response.status}`);
 
-    const data = await response.json();
-    console.log('✅ API Response:', data); // debug
+        const data = await response.json();
+        console.log('✅ API Response:', data); // debug
 
-    loadingOverlay.style.display = 'none';
-    resultsContainer.style.display = 'block';
-    
-    // Pass the form data and AI data to rendering function
-    displayResults(data, event, timeOfDay);
+        loadingOverlay.style.display = 'none';
+        resultsContainer.style.display = 'block';
 
-    // Smooth scroll to results
-    resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Pass the form data and AI data to rendering function
+        displayResults(data, event, timeOfDay);
 
-  } catch (err) {
-    console.error('API Error:', err);
-    loadingOverlay.style.display = 'none';
-    form.style.display = 'flex';
-    alert(`Something went wrong: ${err.message}\n\nMake sure your FastAPI server is running on http://localhost:8000`);
-  }
+        // Smooth scroll to results
+        resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    } catch (err) {
+        console.error('API Error:', err);
+        loadingOverlay.style.display = 'none';
+        form.style.display = 'flex';
+        alert(`Something went wrong: ${err.message}\n\nMake sure your FastAPI server is running on http://localhost:8000`);
+    }
 });
 
 // ── Retry ─────────────────────────────────────────────────
 retryBtn.addEventListener('click', () => {
-  resultsContainer.style.display = 'none';
-  form.style.display = 'flex';
-  document.getElementById('resultsGrid').innerHTML = '';
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+    resultsContainer.style.display = 'none';
+    form.style.display = 'flex';
+    document.getElementById('resultsGrid').innerHTML = '';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
 // ── Build Card Helper ─────────────────────────────────────
 function buildCard(icon, title, items, tip, extraClass = '', showSwatch = true) {
-  const card = document.createElement('div');
-  card.className = `result-card ${extraClass}`;
+    const card = document.createElement('div');
+    card.className = `result-card ${extraClass}`;
 
-  let itemsHTML = items
-    .filter(item => item.value && item.value.toString().trim() !== '')
-    .map(item => {
-      const color = showSwatch ? extractColor(item.value) : null;
-      const swatchHTML = color
-        ? `<span class="result-swatch" style="background:${color};"></span>`
-        : `<span class="result-dot"><i class="fa-solid fa-circle-small"></i></span>`;
-      return `
+    let itemsHTML = items
+        .filter(item => item.value && item.value.toString().trim() !== '')
+        .map(item => {
+            const color = showSwatch ? extractColor(item.value) : null;
+            const swatchHTML = color ?
+                `<span class="result-swatch" style="background:${color};"></span>` :
+                `<span class="result-dot"><i class="fa-solid fa-circle-small"></i></span>`;
+            return `
         <div class="result-item">
           ${swatchHTML}
           <span class="result-text">
             <span class="result-label">${item.label}:</span> ${item.value}
           </span>
         </div>`;
-    }).join('');
+        }).join('');
 
-  card.innerHTML = `
+    card.innerHTML = `
     <div class="result-card-icon"><i class="${icon}"></i></div>
     <h3>${title}</h3>
     ${itemsHTML}
