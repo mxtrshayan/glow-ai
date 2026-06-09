@@ -1,122 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GlowAI By Shayan – Your Personal Makeup Artist</title>
-  <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GlowAI By Shayan – Your Personal Makeup Artist</title>
+    <link rel="stylesheet" href="/style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
+
 <body>
-  <header class="header">
-    <div class="header-inner">
-      <div class="logo">
-        <i class="fa-solid fa-wand-magic-sparkles"></i>
-        <span>GlowAI By Shayan</span>
-      </div>
-      <p class="tagline">Your AI-Powered Personal Makeup Artist</p>
-    </div>
-  </header>
-  <main class="main-container">
-    <form id="makeupForm" class="card-form" novalidate>
-      <section class="form-section">
-        <div class="section-header">
-          <span class="section-number">01</span>
-          <div>
-            <h2>Upload Your Photo</h2>
-            <p>Optional – helps AI detect your skin tone automatically</p>
-          </div>
-        </div>
-        <div class="upload-zone" id="uploadZone">
-          <input type="file" id="imageInput" accept="image/*" hidden />
-          <div class="upload-content" id="uploadContent">
-            <div class="upload-icon">
-              <i class="fa-regular fa-image"></i>
+    <header class="header">
+        <div class="header-inner">
+            <div class="logo">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                <span>GlowAI By Shayan</span>
             </div>
-            <p class="upload-title">Drag & drop your photo here</p>
-            <p class="upload-sub">or</p>
-            <button type="button" class="btn-upload" onclick="document.getElementById('imageInput').click()">
+            <p class="tagline">Your AI-Powered Personal Makeup Artist</p>
+        </div>
+    </header>
+    <main class="main-container">
+        <form id="makeupForm" class="card-form" novalidate>
+            <section class="form-section">
+                <div class="section-header">
+                    <span class="section-number">01</span>
+                    <div>
+                        <h2>Upload Your Photo</h2>
+                        <p>Optional – helps AI detect your skin tone automatically</p>
+                    </div>
+                </div>
+                <div class="upload-zone" id="uploadZone">
+                    <input type="file" id="imageInput" accept="image/*" hidden />
+                    <div class="upload-content" id="uploadContent">
+                        <div class="upload-icon">
+                            <i class="fa-regular fa-image"></i>
+                        </div>
+                        <p class="upload-title">Drag & drop your photo here</p>
+                        <p class="upload-sub">or</p>
+                        <button type="button" class="btn-upload" onclick="document.getElementById('imageInput').click()">
               Browse Photo
             </button>
-            <p class="upload-hint">JPG, PNG up to 10MB</p>
-          </div>
-          <div class="upload-preview" id="uploadPreview" style="display:none;">
-            <img id="previewImg" src="" alt="Preview" />
-            <button type="button" class="btn-remove" id="removeImg">
+                        <p class="upload-hint">JPG, PNG up to 10MB</p>
+                    </div>
+                    <div class="upload-preview" id="uploadPreview" style="display:none;">
+                        <img id="previewImg" src="" alt="Preview" />
+                        <button type="button" class="btn-remove" id="removeImg">
               <i class="fa-solid fa-xmark"></i> Remove
             </button>
-          </div>
-        </div>
-      </section>
-      <section class="form-section">
-        <div class="section-header">
-          <span class="section-number">02</span>
-          <div>
-            <h2>Select Your Skin Tone</h2>
-            <p>Optional – skip if you uploaded a photo</p>
-          </div>
-        </div>
-        <div class="skin-tone-grid">
-          <label class="skin-swatch-label" title="Fair">
+                    </div>
+                </div>
+            </section>
+            <section class="form-section">
+                <div class="section-header">
+                    <span class="section-number">02</span>
+                    <div>
+                        <h2>Select Your Skin Tone</h2>
+                        <p>Optional – skip if you uploaded a photo</p>
+                    </div>
+                </div>
+                <div class="skin-tone-grid">
+                    <label class="skin-swatch-label" title="Fair">
             <input type="radio" name="skin_tone" value="fair" hidden />
             <span class="skin-swatch" style="background:#FDDBB4;">
               <i class="fa-solid fa-check check-icon"></i>
             </span>
             <span class="swatch-name">Fair</span>
           </label>
-          <label class="skin-swatch-label" title="Light">
+                    <label class="skin-swatch-label" title="Light">
             <input type="radio" name="skin_tone" value="light" hidden />
             <span class="skin-swatch" style="background:#F5C89A;">
               <i class="fa-solid fa-check check-icon"></i>
             </span>
             <span class="swatch-name">Light</span>
           </label>
-          <label class="skin-swatch-label" title="Medium">
+                    <label class="skin-swatch-label" title="Medium">
             <input type="radio" name="skin_tone" value="medium" hidden />
             <span class="skin-swatch" style="background:#E0A87C;">
               <i class="fa-solid fa-check check-icon"></i>
             </span>
             <span class="swatch-name">Medium</span>
           </label>
-          <label class="skin-swatch-label" title="Tan">
+                    <label class="skin-swatch-label" title="Tan">
             <input type="radio" name="skin_tone" value="tan" hidden />
             <span class="skin-swatch" style="background:#C68642;">
               <i class="fa-solid fa-check check-icon"></i>
             </span>
             <span class="swatch-name">Tan</span>
           </label>
-          <label class="skin-swatch-label" title="Deep">
+                    <label class="skin-swatch-label" title="Deep">
             <input type="radio" name="skin_tone" value="deep" hidden />
             <span class="skin-swatch" style="background:#8D5524;">
               <i class="fa-solid fa-check check-icon"></i>
             </span>
             <span class="swatch-name">Deep</span>
           </label>
-          <label class="skin-swatch-label" title="Rich">
+                    <label class="skin-swatch-label" title="Rich">
             <input type="radio" name="skin_tone" value="rich" hidden />
             <span class="skin-swatch" style="background:#4A2912;">
               <i class="fa-solid fa-check check-icon"></i>
             </span>
             <span class="swatch-name">Rich</span>
           </label>
-        </div>
-      </section>
-      <section class="form-section">
-        <div class="section-header">
-          <span class="section-number">03</span>
-          <div>
-            <h2>Your Occasion & Style</h2>
-            <p>Help the AI understand your context</p>
-          </div>
-        </div>
-        <div class="form-grid">
-          <div class="form-group">
-            <label for="event">
+                </div>
+            </section>
+            <section class="form-section">
+                <div class="section-header">
+                    <span class="section-number">03</span>
+                    <div>
+                        <h2>Your Occasion & Style</h2>
+                        <p>Help the AI understand your context</p>
+                    </div>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="event">
               <i class="fa-solid fa-calendar-star"></i> Event Type
             </label>
-            <div class="select-wrapper">
-              <select id="event" name="event" required>
+                        <div class="select-wrapper">
+                            <select id="event" name="event" required>
                 <option value="" disabled selected>Choose an event…</option>
                 <option value="everyday">Everyday / Casual</option>
                 <option value="university">University / College</option>
@@ -127,83 +129,84 @@
                 <option value="photoshoot">Photoshoot</option>
                 <option value="festival">Festival / Concert</option>
               </select>
-              <i class="fa-solid fa-chevron-down select-arrow"></i>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="time_of_day">
+                            <i class="fa-solid fa-chevron-down select-arrow"></i>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="time_of_day">
               <i class="fa-solid fa-clock"></i> Time of Day
             </label>
-            <div class="select-wrapper">
-              <select id="time_of_day" name="time_of_day" required>
+                        <div class="select-wrapper">
+                            <select id="time_of_day" name="time_of_day" required>
                 <option value="" disabled selected>Day or night…</option>
                 <option value="morning">Morning</option>
                 <option value="day">Daytime</option>
                 <option value="evening">Evening</option>
                 <option value="night">Night</option>
               </select>
-              <i class="fa-solid fa-chevron-down select-arrow"></i>
-            </div>
-          </div>
-          <div class="form-group full-width">
-            <label for="outfit_color">
+                            <i class="fa-solid fa-chevron-down select-arrow"></i>
+                        </div>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="outfit_color">
               <i class="fa-solid fa-shirt"></i> Outfit Color
             </label>
-            <div class="color-picker-row">
-              <input type="color" id="outfit_color" name="outfit_color" value="#D4A0C0" class="color-picker-input" />
-              <span class="color-label" id="colorLabel">#D4A0C0</span>
-              <div class="color-presets">
-                <span class="preset" style="background:#000000;" data-color="#000000" title="Black"></span>
-                <span class="preset" style="background:#FFFFFF; border:1px solid #ddd;" data-color="#FFFFFF" title="White"></span>
-                <span class="preset" style="background:#C0392B;" data-color="#C0392B" title="Red"></span>
-                <span class="preset" style="background:#2C3E50;" data-color="#2C3E50" title="Navy"></span>
-                <span class="preset" style="background:#27AE60;" data-color="#27AE60" title="Green"></span>
-                <span class="preset" style="background:#F39C12;" data-color="#F39C12" title="Gold"></span>
-                <span class="preset" style="background:#8E44AD;" data-color="#8E44AD" title="Purple"></span>
-                <span class="preset" style="background:#D4A0C0;" data-color="#D4A0C0" title="Pink"></span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <div class="submit-area">
-        <button type="submit" class="btn-submit" id="submitBtn">
+                        <div class="color-picker-row">
+                            <input type="color" id="outfit_color" name="outfit_color" value="#D4A0C0" class="color-picker-input" />
+                            <span class="color-label" id="colorLabel">#D4A0C0</span>
+                            <div class="color-presets">
+                                <span class="preset" style="background:#000000;" data-color="#000000" title="Black"></span>
+                                <span class="preset" style="background:#FFFFFF; border:1px solid #ddd;" data-color="#FFFFFF" title="White"></span>
+                                <span class="preset" style="background:#C0392B;" data-color="#C0392B" title="Red"></span>
+                                <span class="preset" style="background:#2C3E50;" data-color="#2C3E50" title="Navy"></span>
+                                <span class="preset" style="background:#27AE60;" data-color="#27AE60" title="Green"></span>
+                                <span class="preset" style="background:#F39C12;" data-color="#F39C12" title="Gold"></span>
+                                <span class="preset" style="background:#8E44AD;" data-color="#8E44AD" title="Purple"></span>
+                                <span class="preset" style="background:#D4A0C0;" data-color="#D4A0C0" title="Pink"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <div class="submit-area">
+                <button type="submit" class="btn-submit" id="submitBtn">
           <i class="fa-solid fa-wand-magic-sparkles"></i>
           <span>Generate My Makeup Look</span>
         </button>
-        <p class="submit-hint">Powered by Gemini AI ✨</p>
-      </div>
-    </form>
-    <div class="loading-overlay" id="loadingOverlay" style="display:none;">
-      <div class="loading-card">
-        <div class="loading-dots">
-          <span></span><span></span><span></span>
+                <p class="submit-hint">Powered by Gemini AI ✨</p>
+            </div>
+        </form>
+        <div class="loading-overlay" id="loadingOverlay" style="display:none;">
+            <div class="loading-card">
+                <div class="loading-dots">
+                    <span></span><span></span><span></span>
+                </div>
+                <p class="loading-title">Analyzing your style…</p>
+                <p class="loading-sub">Our AI is crafting your perfect look ✨</p>
+            </div>
         </div>
-        <p class="loading-title">Analyzing your style…</p>
-        <p class="loading-sub">Our AI is crafting your perfect look ✨</p>
-      </div>
-    </div>
-    <div class="results-container" id="resultsContainer" style="display:none;">
-      <div class="results-header">
-        <i class="fa-solid fa-sparkles"></i>
-        <h2>Your Personalized Makeup Look</h2>
-        <p id="resultsSubtitle">Here's what our AI recommends for you</p>
-      </div>
-      <div class="results-grid" id="resultsGrid">
-      </div>
-      <div class="results-actions">
-        <button class="btn-save" onclick="window.print()">
+        <div class="results-container" id="resultsContainer" style="display:none;">
+            <div class="results-header">
+                <i class="fa-solid fa-sparkles"></i>
+                <h2>Your Personalized Makeup Look</h2>
+                <p id="resultsSubtitle">Here's what our AI recommends for you</p>
+            </div>
+            <div class="results-grid" id="resultsGrid">
+            </div>
+            <div class="results-actions">
+                <button class="btn-save" onclick="window.print()">
           <i class="fa-solid fa-download"></i> Save My Look
         </button>
-        <button class="btn-retry" id="retryBtn">
+                <button class="btn-retry" id="retryBtn">
           <i class="fa-solid fa-rotate-left"></i> Try Another Look
         </button>
-      </div>
-    </div>
-  </main>
-  <footer class="footer">
-    <p>Made with <i class="fa-solid fa-heart"></i> by Shayan &nbsp;·&nbsp; Powered by Gemini</p>
-  </footer>
-  <script src="script.js"></script>
+            </div>
+        </div>
+    </main>
+    <footer class="footer">
+        <p>Made with <i class="fa-solid fa-heart"></i> by Shayan &nbsp;·&nbsp; Powered by Gemini</p>
+    </footer>
+    <script src="/script.js"></script>
 </body>
+
 </html>
