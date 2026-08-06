@@ -1,0 +1,5 @@
+/* frontend/css/main.css — Aggregator: imports all module CSS files */
+@import url('./base.css');
+@import url('./header.css');
+@import url('./form.css');
+@import url('./results.css');

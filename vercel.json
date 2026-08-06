@@ -1,29 +1,15 @@
 {
-    "version": 2,
-    "builds": [{
-            "src": "api/index.py",
-            "use": "@vercel/python"
-        },
-        {
-            "src": "frontend/**",
-            "use": "@vercel/static"
-        }
-    ],
-    "routes": [{
-            "src": "/analyze",
-            "dest": "api/index.py"
-        },
-        {
-            "src": "/style.css",
-            "dest": "/frontend/style.css"
-        },
-        {
-            "src": "/script.js",
-            "dest": "/frontend/script.js"
-        },
-        {
-            "src": "/(.*)",
-            "dest": "/frontend/index.html"
-        }
-    ]
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/index.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "api/index.py"
+    }
+  ]
 }

@@ -2,211 +2,394 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GlowAI By Shayan – Your Personal Makeup Artist</title>
-    <link rel="stylesheet" href="/style.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GlowAI By Shayan – Your Personal Makeup Artist</title>
+  <meta name="description" content="GlowAI is your AI-powered personal makeup artist. Get personalised makeup, outfit, lens and hairstyle recommendations tailored to your skin tone, occasion, weather and style." />
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 
 <body>
-    <header class="header">
-        <div class="header-inner">
-            <div class="logo">
-                <i class="fa-solid fa-wand-magic-sparkles"></i>
-                <span>GlowAI By Shayan</span>
-            </div>
-            <p class="tagline">Your AI-Powered Personal Makeup Artist</p>
+
+  <!-- ── HEADER ─────────────────────────────────────────────── -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo">
+        <i class="fa-solid fa-wand-magic-sparkles"></i>
+        <span>GlowAI By Shayan</span>
+      </div>
+      <p class="tagline">Your AI-Powered Personal Makeup Artist &amp; Style Advisor</p>
+
+      <!-- Weather widget -->
+      <div class="weather-widget" id="weatherWidget" aria-live="polite"></div>
+
+      <!-- Weather toggle strip -->
+      <div class="weather-toggle-strip" id="weatherToggleStrip">
+        <span class="toggle-label">Use weather for recommendations?</span>
+        <button class="toggle-pill" id="weatherYes" type="button">✅ Yes</button>
+        <button class="toggle-pill" id="weatherNo"  type="button">❌ No</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── MAIN ───────────────────────────────────────────────── -->
+  <main class="main-container">
+    <form id="makeupForm" class="card-form" novalidate>
+
+      <!-- ── 01. PHOTO UPLOAD ─────────────────────────────── -->
+      <section class="form-section">
+        <div class="section-header">
+          <span class="section-number">01</span>
+          <div>
+            <h2>Upload Your Photo</h2>
+            <p>Optional – helps AI detect your skin tone, features, and undertone automatically</p>
+          </div>
         </div>
-    </header>
-    <main class="main-container">
-        <form id="makeupForm" class="card-form" novalidate>
-            <section class="form-section">
-                <div class="section-header">
-                    <span class="section-number">01</span>
-                    <div>
-                        <h2>Upload Your Photo</h2>
-                        <p>Optional – helps AI detect your skin tone automatically</p>
-                    </div>
-                </div>
-                <div class="upload-zone" id="uploadZone">
-                    <input type="file" id="imageInput" accept="image/*" hidden />
-                    <div class="upload-content" id="uploadContent">
-                        <div class="upload-icon">
-                            <i class="fa-regular fa-image"></i>
-                        </div>
-                        <p class="upload-title">Drag & drop your photo here</p>
-                        <p class="upload-sub">or</p>
-                        <button type="button" class="btn-upload" onclick="document.getElementById('imageInput').click()">
+        <div class="upload-zone" id="uploadZone">
+          <input type="file" id="imageInput" accept="image/*" hidden />
+          <div class="upload-content" id="uploadContent">
+            <div class="upload-icon"><i class="fa-regular fa-image"></i></div>
+            <p class="upload-title">Drag &amp; drop your photo here</p>
+            <p class="upload-sub">or</p>
+            <button type="button" class="btn-upload" onclick="document.getElementById('imageInput').click()">
               Browse Photo
             </button>
-                        <p class="upload-hint">JPG, PNG up to 10MB</p>
-                    </div>
-                    <div class="upload-preview" id="uploadPreview" style="display:none;">
-                        <img id="previewImg" src="" alt="Preview" />
-                        <button type="button" class="btn-remove" id="removeImg">
+            <p class="upload-hint">JPG, PNG up to 10MB</p>
+          </div>
+          <div class="upload-preview" id="uploadPreview" style="display:none;">
+            <img id="previewImg" src="" alt="Preview" />
+            <button type="button" class="btn-remove" id="removeImg">
               <i class="fa-solid fa-xmark"></i> Remove
             </button>
-                    </div>
-                </div>
-            </section>
-            <section class="form-section">
-                <div class="section-header">
-                    <span class="section-number">02</span>
-                    <div>
-                        <h2>Select Your Skin Tone</h2>
-                        <p>Optional – skip if you uploaded a photo</p>
-                    </div>
-                </div>
-                <div class="skin-tone-grid">
-                    <label class="skin-swatch-label" title="Fair">
-            <input type="radio" name="skin_tone" value="fair" hidden />
+          </div>
+        </div>
+      </section>
+
+      <!-- ── 02. SKIN TONE ─────────────────────────────────── -->
+      <section class="form-section">
+        <div class="section-header">
+          <span class="section-number">02</span>
+          <div>
+            <h2>Skin Tone &amp; Undertone</h2>
+            <p>Skip if you uploaded a photo — AI will detect automatically</p>
+          </div>
+        </div>
+
+        <!-- 10 skin swatches -->
+        <div class="skin-tone-grid">
+          <label class="skin-swatch-label" title="Porcelain">
+            <input type="radio" name="skin_tone" value="porcelain" hidden />
+            <span class="skin-swatch" style="background:#FAF0E6;">
+              <i class="fa-solid fa-check check-icon"></i>
+            </span>
+            <span class="swatch-name">Porcelain</span>
+          </label>
+
+          <label class="skin-swatch-label" title="Very Fair">
+            <input type="radio" name="skin_tone" value="very_fair" hidden />
             <span class="skin-swatch" style="background:#FDDBB4;">
+              <i class="fa-solid fa-check check-icon"></i>
+            </span>
+            <span class="swatch-name">Very Fair</span>
+          </label>
+
+          <label class="skin-swatch-label" title="Fair">
+            <input type="radio" name="skin_tone" value="fair" hidden />
+            <span class="skin-swatch" style="background:#F5C89A;">
               <i class="fa-solid fa-check check-icon"></i>
             </span>
             <span class="swatch-name">Fair</span>
           </label>
-                    <label class="skin-swatch-label" title="Light">
+
+          <label class="skin-swatch-label" title="Light">
             <input type="radio" name="skin_tone" value="light" hidden />
-            <span class="skin-swatch" style="background:#F5C89A;">
+            <span class="skin-swatch" style="background:#EEB98A;">
               <i class="fa-solid fa-check check-icon"></i>
             </span>
             <span class="swatch-name">Light</span>
           </label>
-                    <label class="skin-swatch-label" title="Medium">
-            <input type="radio" name="skin_tone" value="medium" hidden />
+
+          <label class="skin-swatch-label" title="Light-Medium">
+            <input type="radio" name="skin_tone" value="light_medium" hidden />
             <span class="skin-swatch" style="background:#E0A87C;">
+              <i class="fa-solid fa-check check-icon"></i>
+            </span>
+            <span class="swatch-name">Light Med</span>
+          </label>
+
+          <label class="skin-swatch-label" title="Medium / Wheatish">
+            <input type="radio" name="skin_tone" value="medium" hidden />
+            <span class="skin-swatch" style="background:#C68642;">
               <i class="fa-solid fa-check check-icon"></i>
             </span>
             <span class="swatch-name">Medium</span>
           </label>
-                    <label class="skin-swatch-label" title="Tan">
+
+          <label class="skin-swatch-label" title="Tan / Wheatish">
             <input type="radio" name="skin_tone" value="tan" hidden />
-            <span class="skin-swatch" style="background:#C68642;">
+            <span class="skin-swatch" style="background:#B87333;">
               <i class="fa-solid fa-check check-icon"></i>
             </span>
             <span class="swatch-name">Tan</span>
           </label>
-                    <label class="skin-swatch-label" title="Deep">
-            <input type="radio" name="skin_tone" value="deep" hidden />
+
+          <label class="skin-swatch-label" title="Brown">
+            <input type="radio" name="skin_tone" value="brown" hidden />
             <span class="skin-swatch" style="background:#8D5524;">
+              <i class="fa-solid fa-check check-icon"></i>
+            </span>
+            <span class="swatch-name">Brown</span>
+          </label>
+
+          <label class="skin-swatch-label" title="Deep">
+            <input type="radio" name="skin_tone" value="deep" hidden />
+            <span class="skin-swatch" style="background:#5C3317;">
               <i class="fa-solid fa-check check-icon"></i>
             </span>
             <span class="swatch-name">Deep</span>
           </label>
-                    <label class="skin-swatch-label" title="Rich">
+
+          <label class="skin-swatch-label" title="Rich">
             <input type="radio" name="skin_tone" value="rich" hidden />
-            <span class="skin-swatch" style="background:#4A2912;">
+            <span class="skin-swatch" style="background:#2E160A;">
               <i class="fa-solid fa-check check-icon"></i>
             </span>
             <span class="swatch-name">Rich</span>
           </label>
-                </div>
-            </section>
-            <section class="form-section">
-                <div class="section-header">
-                    <span class="section-number">03</span>
-                    <div>
-                        <h2>Your Occasion & Style</h2>
-                        <p>Help the AI understand your context</p>
-                    </div>
-                </div>
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label for="event">
+        </div>
+
+        <!-- Undertone -->
+        <div style="margin-top:1.2rem;">
+          <label style="display:block;font-size:.8rem;font-weight:600;color:var(--text-mid);text-transform:uppercase;letter-spacing:.6px;margin-bottom:.6rem;">
+            <i class="fa-solid fa-palette" style="color:var(--rose-dark);margin-right:.4rem;"></i> Undertone
+          </label>
+          <div class="pill-group" data-pill-group="undertone">
+            <button type="button" class="pill-btn" data-value="warm">🔥 Warm</button>
+            <button type="button" class="pill-btn" data-value="cool">❄️ Cool</button>
+            <button type="button" class="pill-btn" data-value="neutral">⚖️ Neutral</button>
+            <button type="button" class="pill-btn" data-value="olive">🌿 Olive</button>
+          </div>
+          <input type="hidden" id="undertone_value" name="undertone" value="" />
+        </div>
+
+        <!-- Skin Type -->
+        <div style="margin-top:1.1rem;">
+          <label style="display:block;font-size:.8rem;font-weight:600;color:var(--text-mid);text-transform:uppercase;letter-spacing:.6px;margin-bottom:.6rem;">
+            <i class="fa-solid fa-droplet" style="color:var(--rose-dark);margin-right:.4rem;"></i> Skin Type
+          </label>
+          <div class="pill-group" data-pill-group="skin_type">
+            <button type="button" class="pill-btn" data-value="oily">💧 Oily</button>
+            <button type="button" class="pill-btn" data-value="dry">🌵 Dry</button>
+            <button type="button" class="pill-btn" data-value="combination">🔀 Combination</button>
+            <button type="button" class="pill-btn" data-value="sensitive">🌸 Sensitive</button>
+            <button type="button" class="pill-btn" data-value="normal">✨ Normal</button>
+          </div>
+          <input type="hidden" id="skin_type_value" name="skin_type" value="" />
+        </div>
+      </section>
+
+      <!-- ── 03. OCCASION & STYLE ───────────────────────────── -->
+      <section class="form-section">
+        <div class="section-header">
+          <span class="section-number">03</span>
+          <div>
+            <h2>Occasion &amp; Style</h2>
+            <p>Help the AI understand your context and preferences</p>
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <!-- Event -->
+          <div class="form-group">
+            <label for="event">
               <i class="fa-solid fa-calendar-star"></i> Event Type
             </label>
-                        <div class="select-wrapper">
-                            <select id="event" name="event" required>
+            <div class="select-wrapper">
+              <select id="event" name="event" required>
                 <option value="" disabled selected>Choose an event…</option>
-                <option value="everyday">Everyday / Casual</option>
-                <option value="university">University / College</option>
-                <option value="office">Office / Work</option>
-                <option value="party">Party / Night Out</option>
-                <option value="wedding">Wedding</option>
-                <option value="date">Romantic Date</option>
-                <option value="photoshoot">Photoshoot</option>
-                <option value="festival">Festival / Concert</option>
+                <optgroup label="🎉 Pakistani Occasions">
+                  <option value="wedding">💍 Wedding</option>
+                  <option value="mehndi">🌿 Mehndi</option>
+                  <option value="dholki">🥁 Dholki</option>
+                  <option value="eid">🌙 Eid</option>
+                  <option value="valima">🌸 Valima</option>
+                </optgroup>
+                <optgroup label="📅 Everyday">
+                  <option value="everyday">🏠 Everyday / Casual</option>
+                  <option value="university">🎓 University / College</option>
+                  <option value="office">💼 Office / Work</option>
+                  <option value="shopping">🛍️ Shopping</option>
+                </optgroup>
+                <optgroup label="✨ Special">
+                  <option value="party">🎊 Party / Night Out</option>
+                  <option value="date">❤️ Romantic Date</option>
+                  <option value="photoshoot">📸 Photoshoot</option>
+                  <option value="festival">🎶 Festival / Concert</option>
+                </optgroup>
               </select>
-                            <i class="fa-solid fa-chevron-down select-arrow"></i>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="time_of_day">
+              <i class="fa-solid fa-chevron-down select-arrow"></i>
+            </div>
+          </div>
+
+          <!-- Time of Day -->
+          <div class="form-group">
+            <label for="time_of_day">
               <i class="fa-solid fa-clock"></i> Time of Day
             </label>
-                        <div class="select-wrapper">
-                            <select id="time_of_day" name="time_of_day" required>
+            <div class="select-wrapper">
+              <select id="time_of_day" name="time_of_day" required>
                 <option value="" disabled selected>Day or night…</option>
-                <option value="morning">Morning</option>
-                <option value="day">Daytime</option>
-                <option value="evening">Evening</option>
-                <option value="night">Night</option>
+                <option value="morning">🌅 Morning</option>
+                <option value="day">☀️ Daytime</option>
+                <option value="evening">🌆 Evening</option>
+                <option value="night">🌙 Night</option>
               </select>
-                            <i class="fa-solid fa-chevron-down select-arrow"></i>
-                        </div>
-                    </div>
-                    <div class="form-group full-width">
-                        <label for="outfit_color">
-              <i class="fa-solid fa-shirt"></i> Outfit Color
-            </label>
-                        <div class="color-picker-row">
-                            <input type="color" id="outfit_color" name="outfit_color" value="#D4A0C0" class="color-picker-input" />
-                            <span class="color-label" id="colorLabel">#D4A0C0</span>
-                            <div class="color-presets">
-                                <span class="preset" style="background:#000000;" data-color="#000000" title="Black"></span>
-                                <span class="preset" style="background:#FFFFFF; border:1px solid #ddd;" data-color="#FFFFFF" title="White"></span>
-                                <span class="preset" style="background:#C0392B;" data-color="#C0392B" title="Red"></span>
-                                <span class="preset" style="background:#2C3E50;" data-color="#2C3E50" title="Navy"></span>
-                                <span class="preset" style="background:#27AE60;" data-color="#27AE60" title="Green"></span>
-                                <span class="preset" style="background:#F39C12;" data-color="#F39C12" title="Gold"></span>
-                                <span class="preset" style="background:#8E44AD;" data-color="#8E44AD" title="Purple"></span>
-                                <span class="preset" style="background:#D4A0C0;" data-color="#D4A0C0" title="Pink"></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <div class="submit-area">
-                <button type="submit" class="btn-submit" id="submitBtn">
-          <i class="fa-solid fa-wand-magic-sparkles"></i>
-          <span>Generate My Makeup Look</span>
-        </button>
-                <p class="submit-hint">Powered by Gemini AI ✨</p>
+              <i class="fa-solid fa-chevron-down select-arrow"></i>
             </div>
-        </form>
-        <div class="loading-overlay" id="loadingOverlay" style="display:none;">
-            <div class="loading-card">
-                <div class="loading-dots">
-                    <span></span><span></span><span></span>
-                </div>
-                <p class="loading-title">Analyzing your style…</p>
-                <p class="loading-sub">Our AI is crafting your perfect look ✨</p>
-            </div>
+          </div>
         </div>
-        <div class="results-container" id="resultsContainer" style="display:none;">
-            <div class="results-header">
-                <i class="fa-solid fa-sparkles"></i>
-                <h2>Your Personalized Makeup Look</h2>
-                <p id="resultsSubtitle">Here's what our AI recommends for you</p>
-            </div>
-            <div class="results-grid" id="resultsGrid">
-            </div>
-            <div class="results-actions">
-                <button class="btn-save" onclick="window.print()">
+
+        <!-- Style Preference -->
+        <div style="margin-top:1.1rem;">
+          <label style="display:block;font-size:.8rem;font-weight:600;color:var(--text-mid);text-transform:uppercase;letter-spacing:.6px;margin-bottom:.6rem;">
+            <i class="fa-solid fa-star" style="color:var(--rose-dark);margin-right:.4rem;"></i> Style Preference
+          </label>
+          <div class="pill-group" data-pill-group="style_pref">
+            <button type="button" class="pill-btn" data-value="traditional">🪷 Traditional Pakistani</button>
+            <button type="button" class="pill-btn active" data-value="both">🌍 Both</button>
+            <button type="button" class="pill-btn" data-value="western">👗 Western</button>
+          </div>
+          <input type="hidden" id="style_pref_value" name="style_preference" value="both" />
+        </div>
+
+        <!-- Hijab -->
+        <div style="margin-top:1.1rem;">
+          <label style="display:block;font-size:.8rem;font-weight:600;color:var(--text-mid);text-transform:uppercase;letter-spacing:.6px;margin-bottom:.6rem;">
+            <i class="fa-solid fa-user-hijab" style="color:var(--rose-dark);margin-right:.4rem;"></i> Do You Wear Hijab?
+          </label>
+          <div class="pill-group" data-pill-group="hijab">
+            <button type="button" class="pill-btn" data-value="yes">✅ Yes — suggest hijab style</button>
+            <button type="button" class="pill-btn active" data-value="no">💇‍♀️ No — suggest hairstyle</button>
+          </div>
+          <input type="hidden" id="hijab_value" name="hijab" value="no" />
+        </div>
+      </section>
+
+      <!-- ── 04. OUTFIT COLOUR ──────────────────────────────── -->
+      <section class="form-section">
+        <div class="section-header">
+          <span class="section-number">04</span>
+          <div>
+            <h2>Outfit Colour</h2>
+            <p>Pick a colour or search by name — AI uses this to coordinate your look</p>
+          </div>
+        </div>
+
+        <div class="color-picker-row">
+          <input type="color" id="outfit_color" name="outfit_color" value="#D4A0C0" class="color-picker-input" />
+          <span class="color-label" id="colorLabel">#D4A0C0</span>
+          <input type="text" class="color-name-input" id="colorSearch" placeholder="Search colour…" autocomplete="off" />
+        </div>
+
+        <!-- 24 colour presets -->
+        <div class="color-presets" style="margin-top:.9rem;">
+          <span class="preset" style="background:#000000;" data-color="#000000" data-name="Black"      title="Black"></span>
+          <span class="preset" style="background:#FFFFFF;border:1px solid #ddd;" data-color="#FFFFFF" data-name="White" title="White"></span>
+          <span class="preset" style="background:#C0392B;" data-color="#C0392B" data-name="Red"        title="Red"></span>
+          <span class="preset" style="background:#2C3E50;" data-color="#2C3E50" data-name="Navy"       title="Navy"></span>
+          <span class="preset" style="background:#27AE60;" data-color="#27AE60" data-name="Green"      title="Green"></span>
+          <span class="preset" style="background:#50C878;" data-color="#50C878" data-name="Emerald"    title="Emerald"></span>
+          <span class="preset" style="background:#F39C12;" data-color="#F39C12" data-name="Gold"       title="Gold"></span>
+          <span class="preset" style="background:#E1AD01;" data-color="#E1AD01" data-name="Mustard"    title="Mustard"></span>
+          <span class="preset" style="background:#8E44AD;" data-color="#8E44AD" data-name="Purple"     title="Purple"></span>
+          <span class="preset" style="background:#967BB6;" data-color="#967BB6" data-name="Lavender"   title="Lavender"></span>
+          <span class="preset" style="background:#D4A0C0;" data-color="#D4A0C0" data-name="Pink"       title="Pink"></span>
+          <span class="preset" style="background:#FF00A0;" data-color="#FF00A0" data-name="Fuchsia"    title="Fuchsia"></span>
+          <span class="preset" style="background:#E07B3A;" data-color="#E07B3A" data-name="Burnt Orange" title="Burnt Orange"></span>
+          <span class="preset" style="background:#008080;" data-color="#008080" data-name="Teal"       title="Teal"></span>
+          <span class="preset" style="background:#98FF98;" data-color="#98FF98" data-name="Mint"       title="Mint"></span>
+          <span class="preset" style="background:#8FBC8F;" data-color="#8FBC8F" data-name="Sage"       title="Sage"></span>
+          <span class="preset" style="background:#F5E6C8;" data-color="#F5E6C8" data-name="Champagne"  title="Champagne"></span>
+          <span class="preset" style="background:#800000;" data-color="#800000" data-name="Maroon"     title="Maroon"></span>
+          <span class="preset" style="background:#6B3A5A;" data-color="#6B3A5A" data-name="Plum"       title="Plum"></span>
+          <span class="preset" style="background:#DCAE96;" data-color="#DCAE96" data-name="Dusty Rose" title="Dusty Rose"></span>
+          <span class="preset" style="background:#C0724A;" data-color="#C0724A" data-name="Terracotta" title="Terracotta"></span>
+          <span class="preset" style="background:#4B0082;" data-color="#4B0082" data-name="Indigo"     title="Indigo"></span>
+          <span class="preset" style="background:#808000;" data-color="#808000" data-name="Olive"      title="Olive"></span>
+          <span class="preset" style="background:#2980B9;" data-color="#2980B9" data-name="Blue"       title="Blue"></span>
+        </div>
+      </section>
+
+      <!-- ── 05. OWNED ITEMS ───────────────────────────────── -->
+      <section class="form-section">
+        <div class="section-header">
+          <span class="section-number">05</span>
+          <div>
+            <h2>Your Owned Items <span style="font-size:.75rem;font-weight:400;color:var(--text-light);">(Optional)</span></h2>
+            <p>List clothes, makeup, accessories you already own — AI will build a look using what you have</p>
+          </div>
+        </div>
+        <textarea
+          id="owned_items"
+          name="owned_items"
+          class="owned-textarea"
+          placeholder="e.g. Red shalwar kameez, gold jhumkas, black kajal, nude lipstick, white sneakers, denim jacket, floral maxi dress, silver clutch…"
+        ></textarea>
+        <p style="font-size:.75rem;color:var(--text-light);margin-top:.5rem;">
+          💡 Tip: The more detail you give, the more personalised your look will be.
+        </p>
+      </section>
+
+      <!-- ── SUBMIT ─────────────────────────────────────────── -->
+      <div class="submit-area">
+        <button type="submit" class="btn-submit" id="submitBtn">
+          <i class="fa-solid fa-wand-magic-sparkles"></i>
+          <span>Generate My Perfect Look</span>
+        </button>
+        <p class="submit-hint">Powered by Gemini AI · Weather-aware · Pakistani &amp; Western styles ✨</p>
+      </div>
+
+    </form>
+
+    <!-- ── LOADING ─────────────────────────────────────────── -->
+    <div class="loading-overlay" id="loadingOverlay" style="display:none;">
+      <div class="loading-card">
+        <div class="loading-dots">
+          <span></span><span></span><span></span>
+        </div>
+        <p class="loading-title">Crafting your perfect look…</p>
+        <p class="loading-sub">Our AI is analysing your style, skin tone &amp; weather ✨</p>
+      </div>
+    </div>
+
+    <!-- ── RESULTS ─────────────────────────────────────────── -->
+    <div class="results-container" id="resultsContainer" style="display:none;">
+      <div class="results-header">
+        <i class="fa-solid fa-sparkles"></i>
+        <h2>Your Personalised Look</h2>
+        <p id="resultsSubtitle">Here's what our AI recommends for you</p>
+      </div>
+      <div class="results-grid" id="resultsGrid"></div>
+      <div class="results-actions">
+        <button class="btn-save" onclick="window.print()">
           <i class="fa-solid fa-download"></i> Save My Look
         </button>
-                <button class="btn-retry" id="retryBtn">
+        <button class="btn-retry" id="retryBtn">
           <i class="fa-solid fa-rotate-left"></i> Try Another Look
         </button>
-            </div>
-        </div>
-    </main>
-    <footer class="footer">
-        <p>Made with <i class="fa-solid fa-heart"></i> by Shayan &nbsp;·&nbsp; Powered by Gemini</p>
-    </footer>
-    <script src="/script.js"></script>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ── FOOTER ─────────────────────────────────────────────── -->
+  <footer class="footer">
+    <p>Made with <i class="fa-solid fa-heart"></i> by Shayan &nbsp;·&nbsp; Powered by Gemini AI &nbsp;·&nbsp; Weather by WeatherAPI</p>
+  </footer>
+
+  <!-- JS modules -->
+  <script type="module" src="/js/main.js"></script>
 </body>
 
 </html>

@@ -1,0 +1,199 @@
+/* frontend/css/base.css — Variables, reset, typography, responsive utilities */
+
+/* ── Google Fonts ─────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* ── CSS Variables ────────────────────────────────────────── */
+:root {
+  /* Brand palette */
+  --rose:        #E8A0B4;
+  --rose-dark:   #C9748F;
+  --rose-light:  #F9EEF2;
+  --blush:       #F2D0DC;
+  --gold:        #C9A96E;
+  --gold-light:  #F5E6C8;
+
+  /* Text */
+  --text-dark:   #2D1B26;
+  --text-mid:    #6B4C58;
+  --text-light:  #A8849A;
+
+  /* Surfaces */
+  --white:       #FFFFFF;
+  --bg:          #FDF6F9;
+  --card-bg:     #FFFFFF;
+  --border:      #EDD5E0;
+
+  /* Shadows */
+  --shadow:      0 4px 24px rgba(200,100,140,.10);
+  --shadow-lg:   0 15px 40px rgba(200,100,140,.18);
+  --shadow-xl:   0 30px 60px rgba(200,100,140,.22);
+
+  /* Radius */
+  --radius:      20px;
+  --radius-sm:   12px;
+  --radius-xs:   8px;
+
+  /* Transitions */
+  --transition:  0.25s cubic-bezier(.4,0,.2,1);
+
+  /* Weather badge colours */
+  --weather-rainy:    #5B8DD9;
+  --weather-hot:      #E07B3A;
+  --weather-cold:     #7BBFDF;
+  --weather-mild:     #67B99A;
+}
+
+/* ── Reset ────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+img, svg { display: block; max-width: 100%; height: auto; }
+button, input, select, textarea { font-family: inherit; }
+button { cursor: pointer; border: none; background: none; }
+a { color: inherit; text-decoration: none; }
+
+/* ── Body ─────────────────────────────────────────────────── */
+body {
+  font-family: 'Poppins', sans-serif;
+  background: var(--bg);
+  color: var(--text-dark);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ── Utility ──────────────────────────────────────────────── */
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; overflow: hidden; clip: rect(0,0,0,0); border: 0;
+}
+
+.pill-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .55rem;
+}
+
+.pill-btn {
+  padding: .5rem 1.1rem;
+  border-radius: 50px;
+  border: 1.5px solid var(--border);
+  background: var(--white);
+  color: var(--text-mid);
+  font-size: .82rem;
+  font-weight: 500;
+  transition: var(--transition);
+  cursor: pointer;
+  user-select: none;
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  min-height: 42px; /* Touch-friendly tap target */
+  touch-action: manipulation;
+}
+
+.pill-btn:hover {
+  border-color: var(--rose-dark);
+  color: var(--rose-dark);
+  background: var(--rose-light);
+}
+
+.pill-btn.active {
+  background: linear-gradient(135deg, var(--rose-dark), #B05B76);
+  border-color: transparent;
+  color: var(--white);
+  box-shadow: 0 4px 14px rgba(200,100,140,.35);
+}
+
+/* ── Section header ───────────────────────────────────────── */
+.form-section {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 1.8rem;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  transition: box-shadow var(--transition);
+}
+
+.form-section:hover { box-shadow: var(--shadow-lg); }
+
+.section-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.4rem;
+}
+
+.section-number {
+  background: linear-gradient(135deg, var(--rose-dark), #B05B76);
+  color: var(--white);
+  font-size: .8rem;
+  font-weight: 700;
+  width: 2.2rem; height: 2.2rem;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(200,100,140,.35);
+}
+
+.section-header h2 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: .15rem;
+}
+
+.section-header p {
+  font-size: .8rem;
+  color: var(--text-light);
+  font-weight: 300;
+}
+
+/* ── Tablet & Mobile Adjustments for Base ────────────────── */
+@media (max-width: 768px) {
+  .form-section {
+    padding: 1.4rem;
+    border-radius: 16px;
+  }
+
+  .section-header {
+    gap: .75rem;
+    margin-bottom: 1.1rem;
+  }
+
+  .section-number {
+    width: 1.9rem; height: 1.9rem;
+    font-size: .75rem;
+  }
+
+  .section-header h2 {
+    font-size: .98rem;
+  }
+
+  .section-header p {
+    font-size: .76rem;
+  }
+
+  .pill-btn {
+    padding: .4rem .9rem;
+    font-size: .78rem;
+    min-height: 38px;
+  }
+}
+
+@media (max-width: 480px) {
+  .form-section {
+    padding: 1.1rem .9rem;
+    border-radius: 14px;
+  }
+
+  .pill-btn {
+    font-size: .75rem;
+    padding: .38rem .8rem;
+    flex: 1 1 calc(50% - .55rem); /* 2 pills per row on small phones */
+    justify-content: center;
+    text-align: center;
+  }
+}

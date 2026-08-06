@@ -1,0 +1,377 @@
+/* frontend/css/results.css — Results grid, cards, tips responsive styling */
+
+/* ── Results Container ────────────────────────────────────── */
+.results-container {
+  margin-top: 2.5rem;
+  animation: fade-up .5s ease both;
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+/* ── Results Header ───────────────────────────────────────── */
+.results-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.results-header i {
+  font-size: 2rem;
+  color: var(--rose-dark);
+  margin-bottom: .5rem;
+  display: block;
+  filter: drop-shadow(0 0 10px rgba(200,116,143,.4));
+}
+
+.results-header h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  color: var(--text-dark);
+  margin-bottom: .4rem;
+}
+
+.results-header p {
+  color: var(--text-light);
+  font-size: .9rem;
+  line-height: 1.7;
+}
+
+/* Skin summary pill */
+.skin-summary-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: .4rem;
+  margin-top: .6rem;
+  background: var(--rose-light);
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  padding: .35rem 1rem;
+  font-size: .78rem;
+  color: var(--text-mid);
+  font-weight: 500;
+  max-width: 100%;
+}
+
+.skin-swatch-sm {
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  display: inline-block;
+  border: 1.5px solid rgba(0,0,0,.1);
+  flex-shrink: 0;
+}
+
+/* ── Weather alert banner ─────────────────────────────────── */
+.weather-alert-banner {
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+  padding: .85rem 1.2rem;
+  border-radius: var(--radius-sm);
+  margin-bottom: 1.5rem;
+  font-size: .85rem;
+  font-weight: 500;
+  border-left: 4px solid;
+  animation: fade-up .4s ease both;
+}
+
+.weather-alert-banner.rainy    { background: rgba(91,141,217,.1); border-color: #5B8DD9; color: #2C5F9E; }
+.weather-alert-banner.hot_humid { background: rgba(224,123,58,.1);  border-color: #E07B3A; color: #8B4A1A; }
+.weather-alert-banner.cold     { background: rgba(123,191,223,.1); border-color: #7BBFDF; color: #1E6A8A; }
+.weather-alert-banner.mild     { background: rgba(103,185,154,.1); border-color: #67B99A; color: #1A5C40; }
+
+.weather-alert-banner i { font-size: 1.1rem; flex-shrink: 0; }
+
+/* ── Results Grid ─────────────────────────────────────────── */
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+/* ── Result Card ──────────────────────────────────────────── */
+.result-card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 1.6rem;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  transition: all var(--transition);
+  position: relative;
+  overflow: hidden;
+  animation: card-in .4s ease both;
+}
+
+.result-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--rose-dark), var(--gold));
+}
+
+.result-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--rose);
+}
+
+@keyframes card-in {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+/* Stagger animation for cards */
+.result-card:nth-child(1)  { animation-delay: .05s; }
+.result-card:nth-child(2)  { animation-delay: .1s;  }
+.result-card:nth-child(3)  { animation-delay: .15s; }
+.result-card:nth-child(4)  { animation-delay: .2s;  }
+.result-card:nth-child(5)  { animation-delay: .25s; }
+.result-card:nth-child(6)  { animation-delay: .3s;  }
+.result-card:nth-child(7)  { animation-delay: .35s; }
+.result-card:nth-child(8)  { animation-delay: .4s;  }
+.result-card:nth-child(9)  { animation-delay: .45s; }
+.result-card:nth-child(10) { animation-delay: .5s;  }
+
+.result-card-icon {
+  width: 2.4rem; height: 2.4rem;
+  background: linear-gradient(135deg, var(--rose-light), var(--blush));
+  border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: .9rem;
+}
+
+.result-card-icon i {
+  color: var(--rose-dark);
+  font-size: 1rem;
+}
+
+.result-card h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: .9rem;
+  font-family: 'Playfair Display', serif;
+}
+
+/* ── Result Items ─────────────────────────────────────────── */
+.result-item {
+  display: flex;
+  align-items: flex-start;
+  gap: .6rem;
+  margin-bottom: .6rem;
+  font-size: .83rem;
+  line-height: 1.5;
+}
+
+.result-swatch {
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: .2rem;
+  border: 1.5px solid rgba(0,0,0,.1);
+  box-shadow: 0 2px 4px rgba(0,0,0,.1);
+}
+
+.result-dot i {
+  color: var(--rose-dark);
+  font-size: .5rem;
+  margin-top: .3rem;
+}
+
+.result-label {
+  font-weight: 600;
+  color: var(--text-mid);
+  margin-right: .2rem;
+}
+
+.result-text { color: var(--text-dark); }
+
+/* ── Result Tip ───────────────────────────────────────────── */
+.result-tip {
+  margin-top: .9rem;
+  padding: .6rem .8rem;
+  background: var(--rose-light);
+  border-radius: var(--radius-xs);
+  font-size: .78rem;
+  color: var(--text-mid);
+  line-height: 1.5;
+  border-left: 3px solid var(--rose-dark);
+}
+
+/* ── Overall Tip Banner ───────────────────────────────────── */
+.overall-tip-banner {
+  grid-column: 1 / -1;
+  background: linear-gradient(135deg, #2D1B26, #6B3452);
+  color: var(--white);
+  border-radius: var(--radius);
+  padding: 1.4rem 1.8rem;
+  text-align: center;
+  font-size: .9rem;
+  line-height: 1.6;
+  box-shadow: var(--shadow-lg);
+  margin-top: .5rem;
+  animation: card-in .5s .55s ease both;
+}
+
+.overall-tip-banner strong { color: var(--rose); }
+
+/* ── Fallback notice ──────────────────────────────────────── */
+.fallback-notice {
+  grid-column: 1 / -1;
+  background: var(--gold-light);
+  border: 1px solid var(--gold);
+  border-radius: var(--radius-xs);
+  padding: .7rem 1rem;
+  font-size: .78rem;
+  color: #7A6020;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+
+/* ── Shade chip ───────────────────────────────────────────── */
+.shade-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  background: var(--rose-light);
+  border-radius: 50px;
+  padding: .1rem .6rem;
+  font-size: .72rem;
+  font-weight: 600;
+  color: var(--rose-dark);
+  margin-left: .3rem;
+  border: 1px solid var(--border);
+}
+
+/* ── Results Actions ──────────────────────────────────────── */
+.results-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
+}
+
+.btn-save, .btn-retry {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  padding: .75rem 1.8rem;
+  border-radius: 50px;
+  font-size: .88rem;
+  font-weight: 600;
+  border: none;
+  transition: all var(--transition);
+  min-height: 46px;
+  touch-action: manipulation;
+}
+
+.btn-save {
+  background: linear-gradient(135deg, var(--rose-dark), #B05B76);
+  color: var(--white);
+  box-shadow: 0 4px 14px rgba(200,100,140,.35);
+}
+.btn-save:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(200,100,140,.45); }
+
+.btn-retry {
+  background: var(--white);
+  color: var(--text-mid);
+  border: 1.5px solid var(--border);
+}
+.btn-retry:hover { border-color: var(--rose-dark); color: var(--rose-dark); background: var(--rose-light); }
+
+/* ── Footer ───────────────────────────────────────────────── */
+.footer {
+  background: var(--text-dark);
+  color: rgba(255,255,255,.5);
+  text-align: center;
+  padding: 1.4rem 1rem;
+  font-size: .8rem;
+  margin-top: auto;
+}
+
+.footer i { color: var(--rose); margin: 0 .2rem; }
+
+/* ── Tablet & Mobile Media Queries ────────────────────────── */
+@media (max-width: 850px) {
+  .results-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .results-container {
+    margin-top: 1.8rem;
+  }
+
+  .results-header {
+    margin-bottom: 1.4rem;
+  }
+
+  .results-header h2 {
+    font-size: 1.35rem;
+  }
+
+  .results-header p {
+    font-size: .8rem;
+  }
+
+  .skin-summary-pill {
+    padding: .3rem .85rem;
+    font-size: .72rem;
+    border-radius: 16px;
+  }
+
+  .weather-alert-banner {
+    padding: .75rem 1rem;
+    font-size: .78rem;
+    border-radius: 10px;
+  }
+
+  .results-grid {
+    grid-template-columns: 1fr;
+    gap: .9rem;
+  }
+
+  .result-card {
+    padding: 1.2rem 1rem;
+    border-radius: 16px;
+  }
+
+  .result-card h3 {
+    font-size: .95rem;
+    margin-bottom: .7rem;
+  }
+
+  .result-item {
+    font-size: .8rem;
+  }
+
+  .overall-tip-banner {
+    padding: 1.1rem 1.1rem;
+    font-size: .82rem;
+    border-radius: 16px;
+  }
+
+  .results-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .btn-save, .btn-retry {
+    width: 100%;
+  }
+
+  .footer {
+    padding: 1.2rem .8rem;
+    font-size: .74rem;
+  }
+}
