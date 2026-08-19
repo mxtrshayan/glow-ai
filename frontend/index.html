@@ -381,6 +381,212 @@
       </div>
     </div>
 
+    <!-- ── VIRTUAL TRY-ON STUDIO MODAL ────────────────────── -->
+    <div class="tryon-modal" id="tryonModal" role="dialog" aria-modal="true" aria-labelledby="tryonTitle">
+      <div class="tryon-modal-container">
+        <!-- Header -->
+        <div class="tryon-modal-header">
+          <h2 id="tryonTitle">
+            <i class="fa-solid fa-wand-magic-sparkles"></i> Virtual Makeup Studio
+          </h2>
+          <button type="button" class="btn-close-modal" id="closeTryonBtn" aria-label="Close modal">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+
+        <!-- Body -->
+        <div class="tryon-modal-body">
+          <!-- Left: Image Viewer -->
+          <div class="tryon-viewer-col">
+            <div class="tryon-image-stage">
+              <!-- Loading overlay -->
+              <div class="tryon-loading-overlay" id="tryonLoading" style="display:none;">
+                <div class="tryon-spinner"></div>
+                <p style="font-size:.85rem;font-weight:500;">Applying realistic makeup…</p>
+              </div>
+
+              <!-- Upload prompt if no photo provided -->
+              <div class="tryon-upload-prompt" id="tryonUploadPrompt" style="display:none;">
+                <i class="fa-regular fa-image"></i>
+                <h4>Upload a Selfie</h4>
+                <p>Upload a clear front-facing portrait to try on this recommended look instantly.</p>
+                <input type="file" id="modalImageInput" accept="image/*" hidden />
+                <button type="button" class="btn-tryon-primary" id="modalUploadBtn">
+                  <i class="fa-solid fa-cloud-arrow-up"></i> Choose Photo
+                </button>
+              </div>
+
+              <!-- Split Compare Viewer -->
+              <div class="compare-container" id="tryonCompareStage">
+                <span class="compare-badge badge-before">Original</span>
+                <span class="compare-badge badge-after">With Makeup ✨</span>
+
+                <div class="compare-img compare-before">
+                  <img id="imgBefore" src="" alt="Original Photo" />
+                </div>
+
+                <div class="compare-img compare-after" id="compareAfterPane">
+                  <img id="imgAfter" src="" alt="Virtual Makeup Result" />
+                </div>
+
+                <div class="compare-slider-handle" id="compareSliderHandle">
+                  <i class="fa-solid fa-arrows-left-right"></i>
+                </div>
+
+                <input type="range" class="compare-range-input" id="compareSliderInput" min="0" max="100" value="50" aria-label="Compare slider" />
+              </div>
+            </div>
+
+            <!-- Viewer Controls -->
+            <div class="viewer-controls">
+              <div class="mode-toggle-group">
+                <button type="button" class="mode-btn active" data-view-mode="split">
+                  <i class="fa-solid fa-table-columns"></i> Split View
+                </button>
+                <button type="button" class="mode-btn" data-view-mode="after">
+                  <i class="fa-solid fa-sparkles"></i> Makeup
+                </button>
+                <button type="button" class="mode-btn" data-view-mode="before">
+                  <i class="fa-solid fa-user"></i> Original
+                </button>
+              </div>
+
+              <button type="button" class="btn-download-tryon" id="downloadTryonBtn">
+                <i class="fa-solid fa-download"></i> Save Photo
+              </button>
+            </div>
+          </div>
+
+          <!-- Right: Controls -->
+          <div class="tryon-controls-col">
+            <div class="tryon-error-banner" id="tryonError" style="display:none;"></div>
+
+            <span class="tryon-section-title">Makeup Adjustments</span>
+
+            <!-- Lipstick Card -->
+            <div class="tryon-feature-card active">
+              <div class="feature-header">
+                <div class="feature-title">
+                  <i class="fa-solid fa-heart"></i> Lipstick
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="toggleLipstick" checked />
+                  <span class="slider-round"></span>
+                </label>
+              </div>
+              <div class="feature-inputs">
+                <div class="input-row">
+                  <span>Shade</span>
+                  <div class="color-input-wrapper">
+                    <input type="color" id="lipstickColor" value="#C8385A" />
+                    <span class="color-hex-text" id="lipstickHex">#C8385A</span>
+                  </div>
+                </div>
+                <div class="input-row">
+                  <span>Intensity</span>
+                  <input type="range" class="intensity-slider" id="lipstickOpacity" min="0.1" max="1.0" step="0.05" value="0.7" />
+                </div>
+                <div class="input-row">
+                  <span>Finish</span>
+                  <select class="sub-select" id="lipstickFinish">
+                    <option value="satin" selected>Satin</option>
+                    <option value="matte">Matte</option>
+                    <option value="gloss">Glossy Shine</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Blush Card -->
+            <div class="tryon-feature-card active">
+              <div class="feature-header">
+                <div class="feature-title">
+                  <i class="fa-solid fa-face-smile"></i> Blush
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="toggleBlush" checked />
+                  <span class="slider-round"></span>
+                </label>
+              </div>
+              <div class="feature-inputs">
+                <div class="input-row">
+                  <span>Shade</span>
+                  <div class="color-input-wrapper">
+                    <input type="color" id="blushColor" value="#E07A7A" />
+                    <span class="color-hex-text" id="blushHex">#E07A7A</span>
+                  </div>
+                </div>
+                <div class="input-row">
+                  <span>Intensity</span>
+                  <input type="range" class="intensity-slider" id="blushOpacity" min="0.1" max="0.8" step="0.05" value="0.35" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Eyeshadow Card -->
+            <div class="tryon-feature-card active">
+              <div class="feature-header">
+                <div class="feature-title">
+                  <i class="fa-solid fa-eye"></i> Eyeshadow
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="toggleEyeshadow" checked />
+                  <span class="slider-round"></span>
+                </label>
+              </div>
+              <div class="feature-inputs">
+                <div class="input-row">
+                  <span>Shade</span>
+                  <div class="color-input-wrapper">
+                    <input type="color" id="eyeshadowColor" value="#8B5A2B" />
+                    <span class="color-hex-text" id="eyeshadowHex">#8B5A2B</span>
+                  </div>
+                </div>
+                <div class="input-row">
+                  <span>Intensity</span>
+                  <input type="range" class="intensity-slider" id="eyeshadowOpacity" min="0.1" max="0.8" step="0.05" value="0.45" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Eyeliner Card -->
+            <div class="tryon-feature-card active">
+              <div class="feature-header">
+                <div class="feature-title">
+                  <i class="fa-solid fa-pen-fancy"></i> Eyeliner
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="toggleEyeliner" checked />
+                  <span class="slider-round"></span>
+                </label>
+              </div>
+              <div class="feature-inputs">
+                <div class="input-row">
+                  <span>Shade</span>
+                  <div class="color-input-wrapper">
+                    <input type="color" id="eyelinerColor" value="#1A1A1A" />
+                    <span class="color-hex-text" id="eyelinerHex">#1A1A1A</span>
+                  </div>
+                </div>
+                <div class="input-row">
+                  <span>Intensity</span>
+                  <input type="range" class="intensity-slider" id="eyelinerOpacity" min="0.2" max="1.0" step="0.05" value="0.85" />
+                </div>
+                <div class="input-row">
+                  <span>Style</span>
+                  <select class="sub-select" id="eyelinerStyle">
+                    <option value="winged" selected>Winged Flick</option>
+                    <option value="classic">Classic Line</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
   </main>
 
   <!-- ── FOOTER ─────────────────────────────────────────────── -->

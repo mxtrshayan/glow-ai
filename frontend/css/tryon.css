@@ -1,0 +1,679 @@
+/* frontend/css/tryon.css — Virtual Makeup Studio Modal, Before/After Slider, Controls */
+
+/* ── Try-On Banner & Card Buttons ─────────────────────────── */
+.tryon-cta-banner {
+  background: linear-gradient(135deg, rgba(232, 160, 180, 0.25) 0%, rgba(201, 116, 143, 0.25) 100%);
+  border: 1.5px solid var(--rose-dark);
+  border-radius: var(--radius-sm);
+  padding: 1.2rem 1.5rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(8px);
+  animation: fadeIn .4s ease-out;
+}
+
+.tryon-cta-content {
+  min-width: 0;
+}
+
+.tryon-cta-content h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  color: var(--text-dark);
+  margin-bottom: 0.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tryon-cta-content p {
+  font-size: 0.85rem;
+  color: var(--text-mid);
+}
+
+.btn-tryon-primary {
+  background: linear-gradient(135deg, var(--rose-dark) 0%, #A8486A 100%);
+  color: #ffffff !important;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 0.75rem 1.4rem;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+  box-shadow: 0 4px 15px rgba(201, 116, 143, 0.4);
+  transition: transform var(--transition), box-shadow var(--transition);
+  flex-shrink: 0;
+  justify-content: center;
+}
+
+.btn-tryon-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(201, 116, 143, 0.55);
+}
+
+.btn-tryon-sm {
+  background: var(--rose-light);
+  color: var(--rose-dark);
+  border: 1px solid var(--rose);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.65rem;
+  border-radius: 20px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0.45rem 0 0;
+  vertical-align: middle;
+  transition: all var(--transition);
+}
+
+.btn-tryon-sm:hover {
+  background: var(--rose-dark);
+  color: #fff;
+  border-color: var(--rose-dark);
+  transform: translateY(-1px);
+}
+
+/* ── Modal Backdrop & Window ──────────────────────────────── */
+.tryon-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(45, 27, 38, 0.75);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.tryon-modal.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.tryon-modal-container {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  width: 100%;
+  max-width: 960px;
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-xl);
+  overflow: hidden;
+  animation: modalSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes modalSlideUp {
+  from { transform: translateY(30px) scale(0.96); opacity: 0; }
+  to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+/* ── Modal Header ─────────────────────────────────────────── */
+.tryon-modal-header {
+  padding: 1.1rem 1.6rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(to right, #FFF7FA, #FFFFFF);
+}
+
+.tryon-modal-header h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.35rem;
+  color: var(--text-dark);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.tryon-modal-header h2 i {
+  color: var(--rose-dark);
+}
+
+.btn-close-modal {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--white);
+  color: var(--text-mid);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.btn-close-modal:hover {
+  background: var(--rose-light);
+  color: var(--rose-dark);
+  border-color: var(--rose);
+}
+
+/* ── Modal Body ───────────────────────────────────────────── */
+.tryon-modal-body {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  overflow-y: auto;
+  min-height: 480px;
+}
+
+@media (max-width: 768px) {
+  .tryon-modal-body {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Image Viewer Side ────────────────────────────────────── */
+.tryon-viewer-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.tryon-image-stage {
+  position: relative;
+  width: 100%;
+  height: 380px;
+  background: #251620;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.tryon-image-stage img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Split Compare Viewer */
+.compare-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.compare-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.compare-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.compare-before {
+  z-index: 1;
+}
+
+.compare-after {
+  z-index: 2;
+  overflow: hidden;
+  width: 50%;
+  border-right: 2px solid #ffffff;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+}
+
+.compare-slider-handle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 38px;
+  height: 38px;
+  background: #ffffff;
+  border-radius: 50%;
+  z-index: 10;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--rose-dark);
+  font-size: 0.85rem;
+  cursor: ew-resize;
+  pointer-events: auto;
+}
+
+.compare-range-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: ew-resize;
+  z-index: 20;
+}
+
+.compare-badge {
+  position: absolute;
+  top: 10px;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  z-index: 5;
+  background: rgba(0, 0, 0, 0.6);
+  color: #ffffff;
+  backdrop-filter: blur(4px);
+}
+
+.badge-before { left: 10px; }
+.badge-after { right: 10px; }
+
+/* Viewer Mode Switcher Strip */
+.viewer-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.mode-toggle-group {
+  display: inline-flex;
+  background: var(--rose-light);
+  padding: 3px;
+  border-radius: 20px;
+}
+
+.mode-btn {
+  padding: 5px 12px;
+  border-radius: 16px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-mid);
+  transition: all var(--transition);
+}
+
+.mode-btn.active {
+  background: var(--white);
+  color: var(--rose-dark);
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(200, 100, 140, 0.15);
+}
+
+.btn-download-tryon {
+  padding: 6px 14px;
+  border-radius: 20px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  color: var(--text-dark);
+  font-size: 0.8rem;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.btn-download-tryon:hover {
+  background: var(--rose-light);
+  color: var(--rose-dark);
+  border-color: var(--rose);
+}
+
+/* ── Fallback Photo Upload within Studio ─────────────────── */
+.tryon-upload-prompt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem 1.5rem;
+  color: #fff;
+  gap: 0.8rem;
+}
+
+.tryon-upload-prompt i {
+  font-size: 2.8rem;
+  color: var(--rose);
+}
+
+.tryon-upload-prompt h4 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.25rem;
+}
+
+.tryon-upload-prompt p {
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.75);
+  max-width: 280px;
+}
+
+/* ── Controls Side ────────────────────────────────────────── */
+.tryon-controls-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.tryon-section-title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text-mid);
+  margin-bottom: 0.2rem;
+}
+
+.tryon-feature-card {
+  background: #FFFBFD;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 1rem;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.tryon-feature-card.active {
+  border-color: var(--rose-dark);
+  background: #FFFFFF;
+  box-shadow: 0 4px 16px rgba(201, 116, 143, 0.08);
+}
+
+.feature-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.feature-title {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.feature-title i {
+  color: var(--rose-dark);
+}
+
+/* Toggle Switch */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 38px;
+  height: 22px;
+}
+
+.switch input { opacity: 0; width: 0; height: 0; }
+
+.slider-round {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #E2D3DC;
+  transition: .3s;
+  border-radius: 22px;
+}
+
+.slider-round:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .3s;
+  border-radius: 50%;
+}
+
+input:checked + .slider-round {
+  background-color: var(--rose-dark);
+}
+
+input:checked + .slider-round:before {
+  transform: translateX(16px);
+}
+
+/* Feature Inputs */
+.feature-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.input-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  font-size: 0.8rem;
+  color: var(--text-mid);
+}
+
+.color-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.color-input-wrapper input[type="color"] {
+  -webkit-appearance: none;
+  border: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 0;
+  background: none;
+}
+
+.color-input-wrapper input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.color-input-wrapper input[type="color"]::-webkit-color-swatch {
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+
+.color-hex-text {
+  font-family: monospace;
+  font-size: 0.78rem;
+  color: var(--text-mid);
+}
+
+.intensity-slider {
+  flex: 1;
+  max-width: 130px;
+  accent-color: var(--rose-dark);
+}
+
+.sub-select {
+  padding: 3px 8px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  font-size: 0.75rem;
+  background: var(--white);
+  color: var(--text-dark);
+}
+
+/* ── Error & Loading in Studio ────────────────────────────── */
+.tryon-loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(45, 27, 38, 0.8);
+  backdrop-filter: blur(4px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  color: #fff;
+  z-index: 30;
+  border-radius: var(--radius-sm);
+}
+
+.tryon-spinner {
+  width: 42px;
+  height: 42px;
+  border: 3px solid rgba(232, 160, 180, 0.3);
+  border-top-color: var(--rose);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.tryon-error-banner {
+  background: #FFF0F2;
+  border: 1px solid #F8B4C0;
+  color: #B8324F;
+  border-radius: 8px;
+  padding: 0.65rem 0.9rem;
+  font-size: 0.82rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .tryon-cta-banner {
+    align-items: stretch;
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .tryon-cta-content h3 {
+    font-size: 1.05rem;
+  }
+
+  .tryon-cta-content p {
+    line-height: 1.5;
+  }
+
+  .btn-tryon-primary {
+    width: 100%;
+  }
+
+  .tryon-modal {
+    align-items: flex-start;
+    padding: 0.5rem;
+  }
+
+  .tryon-modal-container {
+    max-height: calc(100vh - 1rem);
+    border-radius: 16px;
+  }
+
+  .tryon-modal-header {
+    padding: 0.9rem 1rem;
+  }
+
+  .tryon-modal-header h2 {
+    font-size: 1.1rem;
+  }
+
+  .tryon-modal-body {
+    gap: 1rem;
+    padding: 1rem;
+    min-height: 0;
+  }
+
+  .tryon-image-stage {
+    height: min(68vw, 360px);
+    min-height: 240px;
+  }
+
+  .viewer-controls {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .mode-toggle-group {
+    justify-content: space-between;
+  }
+
+  .mode-btn {
+    flex: 1;
+    padding-inline: 0.45rem;
+  }
+
+  .btn-download-tryon {
+    justify-content: center;
+    min-height: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .tryon-modal {
+    padding: 0;
+  }
+
+  .tryon-modal-container {
+    max-height: 100vh;
+    border-radius: 0;
+  }
+
+  .tryon-modal-body {
+    padding: 0.8rem;
+  }
+
+  .tryon-image-stage {
+    height: 72vw;
+    min-height: 220px;
+  }
+
+  .tryon-feature-card {
+    padding: 0.85rem;
+  }
+
+  .input-row {
+    align-items: flex-start;
+  }
+
+  .intensity-slider {
+    max-width: 52%;
+  }
+}

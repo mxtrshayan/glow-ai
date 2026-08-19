@@ -1,6 +1,5 @@
-// frontend/js/form.js — Form UI interactions (upload, swatches, pills, color picker)
-
 import { currentWeatherData, useWeather } from './weather.js';
+import { setUserPhoto } from './tryon.js';
 
 /* ── Image Upload & Drag-Drop ─────────────────────────────── */
 export function initUpload() {
@@ -34,6 +33,7 @@ export function initUpload() {
     input.value = ''; img.src = '';
     preview.style.display = 'none';
     content.style.display = 'block';
+    setUserPhoto(null);
   });
 }
 
@@ -43,6 +43,7 @@ function showPreview(file, img, content, preview) {
     img.src = e.target.result;
     content.style.display = 'none';
     preview.style.display = 'block';
+    setUserPhoto(e.target.result);
   };
   reader.readAsDataURL(file);
 }

@@ -1,8 +1,7 @@
-// frontend/js/main.js — App entry point: wires all modules together
-
 import { initWeather, initWeatherToggle } from './weather.js';
 import { initUpload, initColorPicker, initPillGroups, collectFormData, validateForm } from './form.js';
 import { displayResults } from './results.js';
+import { initTryOn } from './tryon.js';
 import { scrollTo } from './utils.js';
 
 const API_URL = '/analyze';
@@ -13,6 +12,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   initColorPicker();
   initPillGroups();
   initWeatherToggle();
+  initTryOn();
 
   // Weather is fetched asynchronously in the background
   initWeather().catch(console.warn);

@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
 from api.config import FRONTEND_DIR
-from api.routes import analyze, weather, static, test
+from api.routes import analyze, weather, static, test, tryon
 
 app = FastAPI(title="GlowAI API", version="2.0.0")
 
@@ -24,6 +24,7 @@ app.mount("/js",  StaticFiles(directory=str(FRONTEND_DIR / "js")),  name="js")
 
 # ── Mount API routers ─────────────────────────────────────────
 app.include_router(analyze.router)
+app.include_router(tryon.router)
 app.include_router(weather.router)
 app.include_router(test.router)
 app.include_router(static.router)   # must be last (catch-all paths)

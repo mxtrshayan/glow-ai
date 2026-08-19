@@ -110,7 +110,8 @@ STRICT RULES FOR RECOMMENDATIONS:
 - Contouring: SKIP for everyday, university, office looks. Only include for wedding, party, photoshoot.
 - Skin tones range from porcelain/very fair (common in European/English backgrounds) to rich dark. Tailor recommendations precisely.
 - Brand suggestions must consider skin type: oily skin → matte, oil-free; dry skin → hydrating, dewy; combination → balanced; sensitive → fragrance-free, gentle.
-- Keep each field SHORT (max one sentence). No jargon. No hex codes.
+- Keep each field SHORT (max one sentence). No jargon.
+- Include appropriate hex color codes for try-on (lips.hex, face.blush_hex, eyes.eyeshadow_hex, eyes.eyeliner_hex).
 - Lens colour should complement outfit and occasion, not clash.
 - VERY IMPORTANT: For Pakistani occasions (eid, wedding, mehndi, dholki, valima), suggest traditional outfits AND Western-fusion if style_preference includes 'western' or 'both'.
 
@@ -126,6 +127,7 @@ Respond ONLY with this exact JSON, no markdown, no extra text:
     "foundation": "e.g. light beige BB cream with SPF",
     "concealer": "e.g. one shade lighter than skin",
     "blush": "e.g. soft peach on cheeks",
+    "blush_hex": "#E07A7A",
     "highlight": "e.g. soft gold on cheekbones (skip for everyday)",
     "contour": "skip for this look (or specific instruction for formal looks)",
     "primer": "e.g. hydrating primer for dry skin / mattifying primer for oily skin",
@@ -134,7 +136,9 @@ Respond ONLY with this exact JSON, no markdown, no extra text:
   }},
   "eyes": {{
     "eyeshadow": "e.g. warm brown on lid",
+    "eyeshadow_hex": "#8B5A2B",
     "eyeliner": "e.g. black kajal in waterline + thin black gel liner on upper lash line",
+    "eyeliner_hex": "#1A1A1A",
     "mascara": "e.g. volumizing black mascara",
     "brows": "e.g. lightly filled with medium brown",
     "tip": "one simple tip for eyes"
@@ -143,6 +147,7 @@ Respond ONLY with this exact JSON, no markdown, no extra text:
     "liner": "e.g. dusty rose liner",
     "lipstick": "e.g. coral pink satin",
     "shade_name": "e.g. Dusty Rose or Berry Crush (descriptive shade name)",
+    "hex": "#C8385A",
     "gloss": "e.g. clear gloss or skip",
     "tip": "one simple tip for lips"
   }},

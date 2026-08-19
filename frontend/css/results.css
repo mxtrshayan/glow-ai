@@ -189,7 +189,11 @@
   margin-right: .2rem;
 }
 
-.result-text { color: var(--text-dark); }
+.result-text {
+  color: var(--text-dark);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
 
 /* ── Result Tip ───────────────────────────────────────────── */
 .result-tip {

@@ -1,6 +1,9 @@
-// frontend/js/results.js — Render all result cards
+// frontend/js/results.js — Render all result cards with Virtual Try-On integration
 
 import { capitalize, extractColor } from './utils.js';
+import { openTryOnStudio } from './tryon.js';
+
+let latestResultData = null;
 
 const WEATHER_ICONS_MAP = {
   rainy:    'fa-cloud-rain',
@@ -11,6 +14,7 @@ const WEATHER_ICONS_MAP = {
 
 /* ── Main render function ─────────────────────────────────── */
 export function displayResults(data, event, timeOfDay) {
+  latestResultData = data;
   const grid     = document.getElementById('resultsGrid');
   const subtitle = document.getElementById('resultsSubtitle');
 
@@ -19,6 +23,28 @@ export function displayResults(data, event, timeOfDay) {
   if (!data || (data.status !== 'success' && data.status !== 'fallback')) {
     grid.innerHTML = '<p style="text-align:center;color:#A8849A;">Something went wrong analyzing your look.</p>';
     return;
+  }
+
+  // ── Top Virtual Try-On CTA Banner ─────────────────────────
+  const tryonBanner = document.createElement('div');
+  tryonBanner.className = 'tryon-cta-banner';
+  tryonBanner.innerHTML = `
+    <div class="tryon-cta-content">
+      <h3><i class="fa-solid fa-wand-magic-sparkles" style="color:var(--rose-dark);"></i> Try On This Recommended Makeup</h3>
+      <p>See lipstick, blush, eyeshadow & eyeliner applied directly on your photo with realistic texture!</p>
+    </div>
+    <button type="button" class="btn-tryon-primary" id="btnTryAllMakeup">
+      <i class="fa-solid fa-camera-retro"></i>
+      <span>Launch Virtual Try-On</span>
+    </button>
+  `;
+  grid.appendChild(tryonBanner);
+
+  const btnTryAll = tryonBanner.querySelector('#btnTryAllMakeup');
+  if (btnTryAll) {
+    btnTryAll.addEventListener('click', () => {
+      openTryOnStudio(null, latestResultData);
+    });
   }
 
   // ── Fallback notice ──────────────────────────────────────
@@ -59,7 +85,7 @@ export function displayResults(data, event, timeOfDay) {
       { label: 'Primer',      value: data.face.primer },
       { label: 'Foundation',  value: data.face.foundation },
       { label: 'Concealer',   value: data.face.concealer },
-      { label: 'Blush',       value: data.face.blush },
+      { label: 'Blush',       value: data.face.blush, tryonFeature: 'blush' },
       { label: 'Highlight',   value: data.face.highlight },
       { label: 'Contour',     value: data.face.contour },
       { label: 'Setting',     value: data.face.setting },
@@ -69,8 +95,8 @@ export function displayResults(data, event, timeOfDay) {
   // ── Eyes card ────────────────────────────────────────────
   if (data.eyes) {
     grid.appendChild(buildCard('fa-solid fa-eye', 'Eyes', [
-      { label: 'Eyeshadow', value: data.eyes.eyeshadow },
-      { label: 'Eyeliner',  value: data.eyes.eyeliner },
+      { label: 'Eyeshadow', value: data.eyes.eyeshadow, tryonFeature: 'eyeshadow' },
+      { label: 'Eyeliner',  value: data.eyes.eyeliner, tryonFeature: 'eyeliner' },
       { label: 'Mascara',   value: data.eyes.mascara },
       { label: 'Brows',     value: data.eyes.brows },
     ], data.eyes.tip));
@@ -80,7 +106,7 @@ export function displayResults(data, event, timeOfDay) {
   if (data.lips) {
     const lipsItems = [
       { label: 'Liner',    value: data.lips.liner },
-      { label: 'Lipstick', value: data.lips.lipstick, chip: data.lips.shade_name },
+      { label: 'Lipstick', value: data.lips.lipstick, chip: data.lips.shade_name, tryonFeature: 'lipstick' },
       { label: 'Gloss',    value: data.lips.gloss },
     ];
     grid.appendChild(buildCard('fa-solid fa-heart', 'Lips', lipsItems, data.lips.tip));
@@ -118,7 +144,6 @@ export function displayResults(data, event, timeOfDay) {
 
   // ── Lens card ────────────────────────────────────────────
   if (data.lens) {
-    const lensColor = extractColor(data.lens.color);
     grid.appendChild(buildCard('fa-solid fa-eye', 'Contact Lenses', [
       { label: 'Colour',  value: data.lens.color },
       { label: 'Brand',   value: data.lens.brand_suggestion },
@@ -148,6 +173,15 @@ export function displayResults(data, event, timeOfDay) {
     banner.innerHTML = `<strong>✨ Your Look:</strong> ${data.overall_tip}`;
     grid.appendChild(banner);
   }
+
+  // Bind individual Try-On action buttons
+  grid.querySelectorAll('.btn-tryon-sm').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const feat = btn.dataset.tryonFeature;
+      openTryOnStudio(feat, latestResultData);
+    });
+  });
 }
 
 /* ── Card Builder ─────────────────────────────────────────── */
@@ -167,11 +201,17 @@ function buildCard(icon, title, items, tip, extraClass = '', showSwatch = true) 
         ? `<span class="shade-chip"><i class="fa-solid fa-droplet" style="font-size:.55rem;"></i> ${item.chip}</span>`
         : '';
 
+      const tryonBtnHTML = item.tryonFeature
+        ? `<button type="button" class="btn-tryon-sm" data-tryon-feature="${item.tryonFeature}" title="Try on this ${item.label}">
+            <i class="fa-solid fa-wand-magic-sparkles"></i> Try On
+           </button>`
+        : '';
+
       return `
         <div class="result-item">
           ${swatchHTML}
           <span class="result-text">
-            <span class="result-label">${item.label}:</span> ${item.value}${chipHTML}
+            <span class="result-label">${item.label}:</span> ${item.value}${chipHTML}${tryonBtnHTML}
           </span>
         </div>`;
     }).join('');
